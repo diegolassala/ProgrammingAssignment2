@@ -41,8 +41,23 @@ cacheSolve <- function(x, ...) {
                 return(inv)
         }
         data <- x$get()
-        m <- solve(data, ...)
+        inv <- solve(data, ...)
         x$setinv(inv)
         inv
 }
 
+####### TEST ################
+
+# Step 1: Create a matrix
+A <- matrix(c(2, 1, 1, 2), nrow = 2, ncol = 2)
+
+# Step 2: Use makeCacheMatrix to wrap it
+cachedMatrix <- makeCacheMatrix(A)
+
+# Step 3: Call cacheSolve() to compute and cache the inverse
+inverse1 <- cacheSolve(cachedMatrix)
+print(inverse1)  # This will compute and print the inverse
+
+# Step 4: Call cacheSolve() again to check if it uses the cache
+inverse2 <- cacheSolve(cachedMatrix)
+print(inverse2)  # Should print the same result and show "getting cached inverse"
